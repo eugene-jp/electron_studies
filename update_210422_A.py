@@ -8,7 +8,7 @@ print("I have the libraries")
 #mazais
 #rootfile="root://cmsxrootd.fnal.gov////store/mc/RunIISummer16NanoAODv7/DYJetsToLL_Pt-50T$
 #lielais
-rootfile="root://cmsxrootd.fnal.gov////store/mc/RunIISummer16NanoAODv7/DYJetsToLL_Pt-50To$
+rootfile="root://cmsxrootd.fnal.gov////store/mc/RunIISummer16NanoAODv7/DYJetsToLL_Pt-50To100_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/NANOAODSIM/PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/120000/1075EDE9-5318-E54F-8326-355DC95DBE1F.root"
 
 tree = uproot.open(rootfile)["Events"]
 now=time.time()
