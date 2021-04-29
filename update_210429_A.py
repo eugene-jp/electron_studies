@@ -33,7 +33,7 @@ for i in range(len(df["nElectron"])):
 print("I have the raw data, {0:.3} s".format(time.time()-start))
 
 #print("I shall start to draw, {0:.3f} s".format(time.time()-start))
-plt.hist(el_E,bins=180,range=[0,180])
+plt.hist(el_E,bins=180,range=[0,180], alpha=0.7, histtype=u'step')
 plt.xlabel("2_E, GeV")
 plt.ylabel("Frequency")
 plt.title("Tonis given NANOAOD, {0} entries, t={1:.0f} s".format(cik,time.time()-start))
