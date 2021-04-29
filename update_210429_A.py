@@ -20,7 +20,7 @@ el_E =[]
 
 df=ds.query("nElectron==2")
 df=df.reset_index()
-print("I have the diE, {1}, {0:.3f} s".format(time.time()-start),len(df["nElectron"]))
+print("I have the diE, {1}, {0:.3f} s".format(time.time()-start,len(df["nElectron"]))
 
 for i in range(len(df["nElectron"])):
     if df["Electron_charge"][i][0]+df["Electron_charge"][i][1] == 0:
