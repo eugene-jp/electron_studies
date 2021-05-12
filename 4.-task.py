@@ -21,9 +21,12 @@ ds = tree.pandas.df(subsection, entrystop=cik) # We take relevant data
 print("I have the branches, {0:.3f} s".format(time.time()-start))
 
 el_inv = []
+mass_check = []
 repetition = []
+repetition_fix = []
 el_mass = 0.000511
-Z_mass = []
+Cosine = []
+Pt_SUM = []
 
 df=ds.query("nElectron==3") # We choose only 3 electron events
 df=df.reset_index() # Reindex it
@@ -45,13 +48,16 @@ for i in range(len(df["nElectron"])):
         elec1.SetPtEtaPhiM(el1_pt, el1_eta, el1_phi, el_mass)
         elec2.SetPtEtaPhiM(el2_pt, el2_eta, el2_phi, el_mass)
         mass = (elec1+elec2).M()
+        mass_check.append(mass)
+        cosine = math.cos(elec1.Angle(elec2.Vect()))
+        pt_vect = elec1.Vect()+elec2.Vect()
+        pt_vect.Mag()
         if mass > 70 and mass < 110:
             el_inv.append(mass)
+            Cosine.append(cosine)
             repetition.append(i)
+            Pt_SUM.append(pt_vect.Mag())
         
-        #invariant2 = 2*el1_pt*el2_pt*(math.cosh(el1_eta-el2_eta)-math.cos(el1_phi-el2_phi))
-        #if (invariant2)**0.5 > 70 and (invariant2)**0.5 < 110:
-            #Z_mass.append((invariant2)**0.5)
     
     if df["Electron_charge"][i][0]+df["Electron_charge"][i][2] == 0: # 1.-3. electron pair analysis
 
@@ -67,16 +73,20 @@ for i in range(len(df["nElectron"])):
         elec1.SetPtEtaPhiM(el1_pt, el1_eta, el1_phi, el_mass)
         elec2.SetPtEtaPhiM(el2_pt, el2_eta, el2_phi, el_mass)
         mass = (elec1+elec2).M()
+        mass_check.append(mass)
+        cosine = math.cos(elec1.Angle(elec2.Vect()))
+        pt_vect = elec1.Vect()+elec2.Vect()
+        pt_vect.Mag()
         if mass > 70 and mass < 110:
             el_inv.append(mass)
+            Cosine.append(cosine)
             repetition.append(i)
+            Pt_SUM.append(pt_vect.Mag())
         
-        #invariant2 = 2*el1_pt*el2_pt*(math.cosh(el1_eta-el2_eta)-math.cos(el1_phi-el2_phi))
-        #if (invariant2)**0.5 > 70 and (invariant2)**0.5 < 110:
-            #Z_mass.append((invariant2)**0.5)
+        
     
     if df["Electron_charge"][i][1]+df["Electron_charge"][i][2] == 0: # 2.-3. electron pair analysis
-        
+            
         
         el1_pt = df["Electron_pt"][i][1]
         el1_eta = df["Electron_eta"][i][1]
@@ -90,32 +100,124 @@ for i in range(len(df["nElectron"])):
         elec1.SetPtEtaPhiM(el1_pt, el1_eta, el1_phi, el_mass)
         elec2.SetPtEtaPhiM(el2_pt, el2_eta, el2_phi, el_mass)
         mass = (elec1+elec2).M()
+        mass_check.append(mass)
+        cosine = math.cos(elec1.Angle(elec2.Vect()))
+        pt_vect = elec1.Vect()+elec2.Vect()
+        pt_vect.Mag()
         if mass > 70 and mass < 110:
             el_inv.append(mass)
+            Cosine.append(cosine)
             repetition.append(i)
+            Pt_SUM.append(pt_vect.Mag())
         
-        #invariant2 = 2*el1_pt*el2_pt*(math.cosh(el1_eta-el2_eta)-math.cos(el1_phi-el2_phi))
-        #if (invariant2)**0.5 > 70 and (invariant2)**0.5 < 110:
-            #Z_mass.append((invariant2)**0.5)
-              
+    #We get rid of extra data point from single 3 electron event
+    #we choose between 1.-2. and 1.-3. electron pairs
+    #We take the one that is closer to 91.2 GeV
+    
+    if df["Electron_charge"][i][0]+df["Electron_charge"][i][1] == 0 and \
+       df["Electron_charge"][i][0]+df["Electron_charge"][i][2] == 0 and \
+       len(el_inv) >= 2 and repetition[-1] == repetition[-2] and \
+       mass_check[-1] == el_inv[-1] and mass_check[-2] == el_inv[-2]:      
+           
+            
+            delta1 = abs(91.2 - el_inv[-2])
+            delta2 = abs(91.2 - el_inv[-1])
+        
+            if delta1 > delta2:
+                del el_inv[-2]
+                repetition_fix.append(i)  
+                      
+            elif delta1 < delta2:
+                del el_inv[-1]
+                repetition_fix.append(i)  
+                            
+            else:
+                print("We have delta1=delta2, need to upgrade code")
+                continue
+    
+    #We get rid of extra data point from single 3 electron event
+    #we choose between 1.-2. and 1.-3. electron pairs
+    #We take the one that is closer to 91.2 GeV
+    
+    
+    if df["Electron_charge"][i][0]+df["Electron_charge"][i][1] == 0 and \
+       df["Electron_charge"][i][1]+df["Electron_charge"][i][2] == 0 and \
+       len(el_inv) >= 2 and repetition[-1] == repetition[-2] and \
+       mass_check[-1] == el_inv[-1] and mass_check[-2] == el_inv[-2]:
+         
+       
+            delta1 = abs(91.2 - el_inv[-2])
+            delta2 = abs(91.2 - el_inv[-1])
+        
+            if delta1 > delta2:
+                del el_inv[-2]
+                repetition_fix.append(i) 
+        
+            elif delta1 < delta2:
+                del el_inv[-1]
+                repetition_fix.append(i) 
+                
+            else:
+                print("We have delta1=delta2, need to upgrade code")
+                continue
+                
+    #We get rid of extra data point from single 3 electron event
+    #we choose between 1.-2. and 2.-3. electron pairs
+    #We take the one that is closer to 91.2 GeV
+       
+    if df["Electron_charge"][i][0]+df["Electron_charge"][i][2] == 0 and \
+       df["Electron_charge"][i][1]+df["Electron_charge"][i][2] == 0 and \
+       len(el_inv) >= 2 and repetition[-1] == repetition[-2] and \
+       mass_check[-1] == el_inv[-1] and mass_check[-2] == el_inv[-2]: 
+           
+        
+            delta1 = abs(91.2 - el_inv[-2])
+            delta2 = abs(91.2 - el_inv[-1])
+        
+            if delta1 > delta2:
+                del el_inv[-2]
+                repetition_fix.append(i) 
+        
+            elif delta1 < delta2:
+                del el_inv[-1]
+                repetition_fix.append(i) 
+            else:
+                print("We have delta1=delta2, need to upgrade code")
+                continue
+     
+    #We get rid of extra data point from single 3 electron event
+    #we choose between 1.-3. and 2.-3. electron pairs
+    #We take the one that is closer to 91.2 GeV 
+                    
 print("I have the raw data, {0:.3} s".format(time.time()-start))
 
 repeat = []
+repeat_fix = []
 for i in range(len(repetition)-1): # We check how many data points use the same data entry twice
     if repetition[i] == repetition[i+1]:
         repeat.append(repetition[i])
         
+for i in range(len(repetition_fix)-1): # We check how many data points use the same data entry twice after our fix
+    if repetition_fix[i] == repetition_fix[i+1]:
+        repeat_fix.append(repetition_fix[i]) 
+               
+print("In total we got " + str(len(el_inv)) + " events!")
 print("We used same event twice " + str(len(repeat)) + " times... We need to fix this somehow")
+print("After our fix we used same event twice " + str(len(repeat_fix)) + " times...")
 
-
+if len(repeat_fix)==0:
+  print("Problem solved")
 #plt.figure(1)
-#plt.hist(Z_mass,bins=180,range=[0,180], alpha=0.7, histtype=u'step')
 #plt.xlabel("M, GeV")
 #plt.ylabel("Frequency")
 #plt.title("Tonis given NANOAOD with 'Formula', {0} entries, t={1:.0f} s".format(cik,time.time()-start))
 #plt.xticks(np.arange(0,190,10))
 
-#plt.figure(2)
+#plt.hist(Pt_SUM,bins=180,range=[0,180],alpha=0.7,histtype=u'step')
+
+#plt.hist(Cosine,bins=200,range=[-1,1],alpha=0.7,histtype=u'step')
+
+plt.figure(2)
 plt.hist(el_inv,bins=180,range=[0,180], alpha=0.7, histtype=u'step')
 plt.xlabel("M, GeV")
 plt.ylabel("Frequency")
