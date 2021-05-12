@@ -205,8 +205,8 @@ print("In total we got " + str(len(el_inv)) + " events!")
 print("We used same event twice " + str(len(repeat)) + " times... We need to fix this somehow")
 print("After our fix we used same event twice " + str(len(repeat_fix)) + " times...")
 
-if len(repeat_fix)==0:
-  print("Problem solved")
+if len(repeat_fix) == 0 and len(repeat) == len(repetition_fix):
+    print("Problem solved")
 #plt.figure(1)
 #plt.xlabel("M, GeV")
 #plt.ylabel("Frequency")
