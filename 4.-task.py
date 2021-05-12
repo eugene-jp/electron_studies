@@ -197,16 +197,18 @@ for i in range(len(repetition)-1): # We check how many data points use the same 
     if repetition[i] == repetition[i+1]:
         repeat.append(repetition[i])
         
-for i in range(len(repetition_fix)-1): # We check how many data points use the same data entry twice after our fix
+for i in range(len(repetition_fix)-1): # We check if we have deleted one of the double-data points
     if repetition_fix[i] == repetition_fix[i+1]:
         repeat_fix.append(repetition_fix[i]) 
                
 print("In total we got " + str(len(el_inv)) + " events!")
 print("We used same event twice " + str(len(repeat)) + " times... We need to fix this somehow")
-print("After our fix we used same event twice " + str(len(repeat_fix)) + " times...")
+print("We deleted both of double-data points " + str(len(repeat_fix)) + " times...")
 
 if len(repeat_fix) == 0 and len(repeat) == len(repetition_fix):
     print("Problem solved")
+else:
+    print("We deleted too few or too many data points!")
 #plt.figure(1)
 #plt.xlabel("M, GeV")
 #plt.ylabel("Frequency")
