@@ -224,14 +224,19 @@ for i in range(len(repetition_check)-1): # We check if we use the same data poin
         repeating.append(repetition_check[i]) 
                
 print("In total we got " + str(len(el_inv)) + " events!")
-print("We used same event twice " + str(len(repeat)) + " times... We need to fix this somehow")
-print("After our fix we used same event twice " + str(len(repeating)) + " times...")
-print("We deleted both of double-data points " + str(len(repeat_del)) + " times...")
 
-if len(repeat_del) == 0 and len(repeat) == len(repetition_fix):
+print("We used same event twice " + str(len(repeat)) + " times... We need to fix this somehow")
+
+print("After our fix we used same event twice " + str(len(repeating)) + " times...")
+
+print("Safety check. We deleted both of our double data points " + str(len(repeat_del)) + " times. This should be 0")
+
+if len(repeat_del) == 0 and len(repeat) == len(repetition_fix): # We check whether we have deleted the same amount of points as were doubled at the start of the script
     print("Problem solved")
 else:
     print("We deleted too few or too many data points!")
+
+
 plt.figure(1)
 #plt.xlabel("M, GeV")
 #plt.ylabel("Frequency")
