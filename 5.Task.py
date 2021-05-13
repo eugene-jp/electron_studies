@@ -433,8 +433,8 @@ print("Safety check. We deleted all four of our quadruple data points " + str(le
 print("Im 99% sure, this should be correct safety check, but again 99% not 100%!")
 print("\n")
 
-print("After our fix we used same event twice " + str(len(repeating2)-len(repeating3)-len(repeating4)) + " times...")
-print("After our fix we used same event three times " + str(len(repeating3)-len(repeating4)) + " times... ")
+print("After our fix we used same event twice " + str(len(repeating2)-2*(len(repeating3)-2*len(repeating4))-3*len(repeating4)) + " times...")
+print("After our fix we used same event three times " + str(len(repeating3)-2*len(repeating4)) + " times... ")
 print("After our fix we used same event four times " + str(len(repeating4)) + " times...")
 print("\n")
 
