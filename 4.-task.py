@@ -24,6 +24,7 @@ el_inv = []
 mass_check = []
 repetition = []
 repetition_fix = []
+repetition_check = []
 el_mass = 0.000511
 Cosine = []
 Pt_SUM = []
@@ -50,13 +51,14 @@ for i in range(len(df["nElectron"])):
         mass = (elec1+elec2).M()
         mass_check.append(mass)
         cosine = math.cos(elec1.Angle(elec2.Vect()))
-        pt_vect = elec1.Vect()+elec2.Vect()
-        pt_vect.Mag()
+        #pt_vect = elec1.Vect()+elec2.Vect()
+        #pt_vect.Mag()
         if mass > 70 and mass < 110:
             el_inv.append(mass)
             Cosine.append(cosine)
             repetition.append(i)
-            Pt_SUM.append(pt_vect.Mag())
+            repetition_check.append(i)
+            #Pt_SUM.append(pt_vect.Mag())
         
     
     if df["Electron_charge"][i][0]+df["Electron_charge"][i][2] == 0: # 1.-3. electron pair analysis
@@ -75,13 +77,14 @@ for i in range(len(df["nElectron"])):
         mass = (elec1+elec2).M()
         mass_check.append(mass)
         cosine = math.cos(elec1.Angle(elec2.Vect()))
-        pt_vect = elec1.Vect()+elec2.Vect()
-        pt_vect.Mag()
+        #pt_vect = elec1.Vect()+elec2.Vect()
+        #pt_vect.Mag()
         if mass > 70 and mass < 110:
             el_inv.append(mass)
             Cosine.append(cosine)
             repetition.append(i)
-            Pt_SUM.append(pt_vect.Mag())
+            repetition_check.append(i)
+            #Pt_SUM.append(pt_vect.Mag())
         
         
     
@@ -102,13 +105,14 @@ for i in range(len(df["nElectron"])):
         mass = (elec1+elec2).M()
         mass_check.append(mass)
         cosine = math.cos(elec1.Angle(elec2.Vect()))
-        pt_vect = elec1.Vect()+elec2.Vect()
-        pt_vect.Mag()
+        #pt_vect = elec1.Vect()+elec2.Vect()
+        #pt_vect.Mag()
         if mass > 70 and mass < 110:
             el_inv.append(mass)
             Cosine.append(cosine)
             repetition.append(i)
-            Pt_SUM.append(pt_vect.Mag())
+            repetition_check.append(i)
+            #Pt_SUM.append(pt_vect.Mag())
         
     #We get rid of extra data point from single 3 electron event
     #we choose between 1.-2. and 1.-3. electron pairs
@@ -125,10 +129,14 @@ for i in range(len(df["nElectron"])):
         
             if delta1 > delta2:
                 del el_inv[-2]
+                del Cosine[-2]
+                del repetition_check[-2]
                 repetition_fix.append(i)  
                       
             elif delta1 < delta2:
                 del el_inv[-1]
+                del Cosine[-1]
+                del repetition_check[-1]
                 repetition_fix.append(i)  
                             
             else:
@@ -151,10 +159,14 @@ for i in range(len(df["nElectron"])):
         
             if delta1 > delta2:
                 del el_inv[-2]
+                del Cosine[-2]
+                del repetition_check[-2]
                 repetition_fix.append(i) 
         
             elif delta1 < delta2:
                 del el_inv[-1]
+                del Cosine[-1]
+                del repetition_check[-1]
                 repetition_fix.append(i) 
                 
             else:
@@ -176,10 +188,14 @@ for i in range(len(df["nElectron"])):
         
             if delta1 > delta2:
                 del el_inv[-2]
+                del Cosine[-2]
+                del repetition_check[-2]
                 repetition_fix.append(i) 
         
             elif delta1 < delta2:
                 del el_inv[-1]
+                del Cosine[-1]
+                del repetition_check[-1]
                 repetition_fix.append(i) 
             else:
                 print("We have delta1=delta2, need to upgrade code")
@@ -192,24 +208,30 @@ for i in range(len(df["nElectron"])):
 print("I have the raw data, {0:.3} s".format(time.time()-start))
 
 repeat = []
-repeat_fix = []
+repeat_del = []
+repeating = []
 for i in range(len(repetition)-1): # We check how many data points use the same data entry twice
     if repetition[i] == repetition[i+1]:
         repeat.append(repetition[i])
         
 for i in range(len(repetition_fix)-1): # We check if we have deleted one of the double-data points
     if repetition_fix[i] == repetition_fix[i+1]:
-        repeat_fix.append(repetition_fix[i]) 
+        repeat_del.append(repetition_fix[i]) 
+        
+for i in range(len(repetition_check)-1): # We check if we use the same data point twice after our fix
+    if repetition_check[i] == repetition_check[i+1]:
+        repeating.append(repetition_check[i]) 
                
 print("In total we got " + str(len(el_inv)) + " events!")
 print("We used same event twice " + str(len(repeat)) + " times... We need to fix this somehow")
-print("We deleted both of double-data points " + str(len(repeat_fix)) + " times...")
+print("After our fix we used same event twice " + str(len(repeating)) + " times...")
+print("We deleted both of double-data points " + str(len(repeat_del)) + " times...")
 
-if len(repeat_fix) == 0 and len(repeat) == len(repetition_fix):
+if len(repeat_del) == 0 and len(repeat) == len(repetition_fix):
     print("Problem solved")
 else:
     print("We deleted too few or too many data points!")
-#plt.figure(1)
+plt.figure(1)
 #plt.xlabel("M, GeV")
 #plt.ylabel("Frequency")
 #plt.title("Tonis given NANOAOD with 'Formula', {0} entries, t={1:.0f} s".format(cik,time.time()-start))
@@ -217,7 +239,10 @@ else:
 
 #plt.hist(Pt_SUM,bins=180,range=[0,180],alpha=0.7,histtype=u'step')
 
-#plt.hist(Cosine,bins=200,range=[-1,1],alpha=0.7,histtype=u'step')
+plt.hist(Cosine,bins=100,range=[-1,1],alpha=0.7,histtype=u'step')
+plt.xlabel("Cos(l1->l2), value")
+plt.ylabel("Frequency")
+plt.title("Toni given NANOAOD with 3 electron events, {0} entries, t={1:.0f} s".format(cik,time.time()-start))
 
 plt.figure(2)
 plt.hist(el_inv,bins=180,range=[0,180], alpha=0.7, histtype=u'step')
