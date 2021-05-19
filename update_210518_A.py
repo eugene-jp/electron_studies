@@ -44,9 +44,9 @@ for index in range(len(df["nElectron"])):
                 if np.abs(mass_here-91.2)<20:
                     if np.abs(mass_here-91.2)<np.abs(mass-91.2):
                         mass=mass_here
-    if mass==0:
-        break
-    el_mass.append(mass)
+    if not mass==0:
+        el_mass.append(mass)
+
     
 print("I have the raw data, {0:.3f} s".format(time.time()-start))
 
