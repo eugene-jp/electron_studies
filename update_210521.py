@@ -1,16 +1,18 @@
 import time
 bigBang=time.time()
 import uproot
+import ROOT
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pn
 names=pn.read_csv("all_files_2017_exclUL.txt", sep='\t',names=["nos"]) 
 print("I have the libraries and names")
 
+notik=0
 tik=10#len(names)
 el_mass =[]
-for aiziet in range(tik):
-    print("\n {0}/{1} and {2:0f} s:".format(aiziet+1,tik,bigBang-time.time()))
+for aiziet in range(notik,tik):
+    print("\n {0}/{1} and {2:0f} min or {3:0f} h:".format(aiziet+1,tik,(time.time()-bigBang)/60,(time.time()-bigBang)/3600))
     start=time.time()
         
     rootfile="root://cmsxrootd.fnal.gov///"+names["nos"][aiziet]
@@ -42,7 +44,7 @@ for aiziet in range(tik):
     
 print("\nShall save")
 savetime=time.time()
-fo=open("2017_dimass_test.txt","a")
+fo=open("2017_dimass_test_{0}_{1}.txt"/format(notik, tik),"a")
 for i in range(len(el_mass)):
     fo.write(str(el_mass[i])+"\n")
 fo.close()
