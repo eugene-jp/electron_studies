@@ -54,11 +54,11 @@ for aiziet in range(notik,tik):
     print("  each {0:.2f} ms".format(1000*filetime/len(df["nElectron"])))
     #print("\nShall save")
     savetime=time.time()
-    fo=open("2017_dimass_test_{0}_{1}.txt".format(notik,tik),"a")
+    fo=open("2017_dimass_data_{0}_{1}.txt".format(notik,tik),"a")
     for i in range(len(el_mass)):
         fo.write(str(el_mass[i])+"\n")
     fo.close()
-    fs=open("2017_dimass_test_{0}_{1}_progress.txt".format(notik,tik),"a")
+    fs=open("2017_dimass_progress_{0}_{1}.txt".format(notik,tik),"a")
     fs.write("{0}\t{1}\t{2}\t{3:.2f}\n".format(aiziet,wall_time(time.time()-bigBang),
                                            len(df["nElectron"]),1000*filetime/len(df["nElectron"])))
     fs.close()
