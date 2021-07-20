@@ -15,9 +15,7 @@ def l_wall_time(seconds):
     return "{0:.0f}min:{1:.0f}s".format(m,s)
 
 names=pn.read_csv("nosaukumi_2017_MC.txt", sep='\t',names=["nos"]) 
-
-PUweights=pn.read_csv("PUweightList.txt", sep='\t',names=["PUweight"])
-
+PUweights= uproot.open("pu_weights_2017.root")["weights"].values
 print("I have the libraries and names")
 
 notik=0
@@ -53,13 +51,8 @@ for aiziet in range(notik,tik):
                              df["Electron_phi"][i][1],0.000511)
             el_mass.append((el1+el2).M())   
             
-            for j in range(len(PUweights["PUweight"])):
-                if j == df["Pileup_nPU"][i]:
-                    weights = 41.48 * 5765400 * 1 * 1 * PUweights["PUweight"][j]/102486448
-                    el_weight.append(weights)
-                else:
-                    continue
-
+            weights = 41.48 * 5765400 * 1 * 1 * PUweights[df["Pileup_nPU"][i]]/102486448
+            el_weight.append(weights)
 
     filetime=time.time()-start
     print(" {0}\tI have the raw data".format(l_wall_time(filetime)))
