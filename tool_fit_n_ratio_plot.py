@@ -88,7 +88,7 @@ ax[0].set_title('y2017, 2Gauss fit, with PUweights, without smearing and SF')
 
 ax[1].scatter(s_d_x,d_v_mc,color="k",marker=".", facecolors='none',label="data/MC")
 ax[1].plot(s_d_x,np.ones(len(s_d_x)),lw=1,color="k",alpha=0.7)
-ax[1].plot(s_d_x,np.ones(len(s_d_x)),lw=1,color="r",linestyle="--",alpha=0.7)
+ax[1].plot(s_d_x,0.75*np.ones(len(s_d_x)),lw=1,color="r",linestyle="--",alpha=0.7)
 ax[1].set_xlabel("dielectron mass, GeV")
 ax[1].set_ylabel("Data/MC")
 ax[1].set_xlim([no,lidz])
