@@ -63,7 +63,7 @@ for aiziet in range(notik,tik):
                     if df["Electron_pt"][i][1]>sf["pt_no"][mekle] and df["Electron_pt"][i][1]<sf["pt_lidz"][mekle]:
                         sf2=sf["SF"][mekle]
             
-            weights = 41.48 * 5765400 * 1 * sf1 * sf2 * PUweights[df["Pileup_nPU"][i]]/102486448
+            weights = 41.48 * 5765400 * 1 * sf1 * sf2 * PUweights[df["Pileup_nPU"][i]]/102863931
             el_weight.append(weights)
 
     filetime=time.time()-start
