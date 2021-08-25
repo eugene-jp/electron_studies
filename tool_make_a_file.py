@@ -21,12 +21,12 @@ for file in glob.glob("2017_dimass_test_*.txt"):
     n+=1
     print("{0}/{1}\t{2}".format(n,len(glob.glob("2017_dimass_test_*.txt")),
                                 wall_time(time.time()-bigBang)))
-    df=pn.read_csv(file, sep='\t',names=["dimass"])
+    df=pn.read_csv(file, sep='\t',names=["dimass","weights"])
     print(" has {0}".format(len(df["dimass"])))
     num+=len(df["dimass"])
     fo=open("2017_data.txt","a")
     for i in range(len(df["dimass"])):
-        fo.write(str(df["dimass"][i])+"\n")
+        fo.write(str(df["dimass"][i])+str(df["weights"][i])+"\n")
         quarterz(i,len(df["dimass"]))
     fo.close()
     
