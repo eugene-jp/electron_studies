@@ -26,7 +26,7 @@ for file in glob.glob("2017_dimass_test_*.txt"):
     num+=len(df["dimass"])
     fo=open("2017_data.txt","a")
     for i in range(len(df["dimass"])):
-        fo.write(str(df["dimass"][i])+str(df["weights"][i])+"\n")
+        fo.write("{0}\t{1}\n".format(df["dimass"][i],df["weights"][i]))
         quarterz(i,len(df["dimass"]))
     fo.close()
     
