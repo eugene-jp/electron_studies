@@ -16,7 +16,7 @@ def l_wall_time(seconds):
     return "{0:.0f}min:{1:.0f}s".format(m,s)
 
 names=pn.read_csv("nosaukumi_2017_data_v9.txt", sep='\t',names=["nos"]) 
-print("I have the libraries and names")print("I have the libraries and names")
+print("I have the libraries and names")
 
 notik=0
 tik=len(names["nos"])
@@ -60,7 +60,7 @@ for aiziet in range(notik,tik):
     
     fo=open("2017_data_v9_dimass_n_weights_{0}_{1}.txt".format(notik,tik),"a")
     for i in range(len(el_mass)):
-        fo.write(str(el_mass[i])+"\t"+str(el_weight[i])+"\n")
+        fo.write(str(el_mass[i])+"\n")
     fo.close()
     
     fs=open("2017_data_v9_progress_{0}_{1}.txt".format(notik,tik),"a")
