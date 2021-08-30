@@ -19,7 +19,7 @@ names=pn.read_csv("nosaukumi_2017_MC_v9.txt", sep='\t',names=["nos"])
 PUweights= uproot.open("pu_weights_2017.root")["weights"].values
 sfv=pn.read_csv("2017_mva90_iso_2d.txt",sep="\t",header=None) #find it in my public folder
 ex,ey=[-2.5,-2.,-1.566,-1.444,-0.8,0.,0.8,1.444,1.566,2.,2.5],[ 10., 20., 35., 50., 100., 200., 500.]
-print("I have the libraries and names")print("I have the libraries and names")
+print("I have the libraries and names")
 
 notik=0
 tik=len(names["nos"])
