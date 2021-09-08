@@ -1,4 +1,4 @@
-# Zee MC, no cuts
+# Zee MC, >20 GeV cuts
 import time
 bigBang=time.time()
 import uproot
@@ -53,8 +53,7 @@ for aiziet in range(notik,tik):
                              df["Electron_phi"][i][0],0.000511)
             el2.SetPtEtaPhiM(df["Electron_pt"][i][1],
                              df["Electron_eta"][i][1],
-                             df["Electron_phi"][i][1],0.000511)
-            el_mass.append((el1+el2).M())   
+                             df["Electron_phi"][i][1],0.000511)   
             
             sf1,sf2=0,0 
             for meta in range(len(ex)-1):
@@ -66,9 +65,11 @@ for aiziet in range(notik,tik):
                     for mpt in range(len(ey)-1):
                         if df["Electron_pt"][i][1]<ey[mpt+1] and df["Electron_pt"][i][1]>=ey[mpt]:
                             sf2=sfv.loc[meta,mpt]
-            
-            weights = 41.48 * 5765400 * 1 * sf1 * sf2 * PUweights[df["Pileup_nPU"][i]]/102863931
-            el_weight.append(weights)
+                            
+            if df["Pileup_nPU"][i]<len(PUweights) and not (sf1==0 or sf2==0):
+                weights = 41.48 * 5765400 * 1 * sf1 * sf2 * PUweights[df["Pileup_nPU"][i]]/102863931
+                el_weight.append(weights)
+                el_mass.append((el1+el2).M())
 
     filetime=time.time()-start
     print(" {0}\tI have the raw data".format(l_wall_time(filetime)))
