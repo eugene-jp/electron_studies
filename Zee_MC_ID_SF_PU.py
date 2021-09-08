@@ -44,7 +44,7 @@ for aiziet in range(notik,tik):
     print(" {0}\tI have the diE, {1}".format(l_wall_time(time.time()-start),len(df["nElectron"])))
 
     for i in range(len(df["nElectron"])):
-        if (df["Electron_charge"][i][0]+df["Electron_charge"][i][1] == 0) and ((df["Electron_mvaFall17V2Iso_WP90"][i][0] and df["Electron_mvaFall17V2Iso_WP90"][i][1])== True):
+        if (df["Electron_charge"][i][0]+df["Electron_charge"][i][1] == 0) and ((df["Electron_mvaFall17V2Iso_WP90"][i][0] and df["Electron_mvaFall17V2Iso_WP90"][i][1]) == True) and (df["Electron_pt"][i][0] > 20 and df["Electron_pt"][i][1] > 20):
             el1 = ROOT.TLorentzVector()
             el2 = ROOT.TLorentzVector()
 
