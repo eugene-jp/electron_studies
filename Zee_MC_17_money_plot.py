@@ -80,7 +80,7 @@ for aiziet in range(notik,tik):
                                         sf2=sfv.loc[meta,mpt]
 
                         if df["Pileup_nPU"][i]<len(PUweights) and not (sf1==0 or sf2==0):
-                            weights = 59.83 * 6077220 * 1 * sf1 * sf2 * PUweights[df["Pileup_nPU"][i]]/98433266
+                            weights = 41.48 * 6077220 * 1 * sf1 * sf2 * PUweights[df["Pileup_nPU"][i]]/102863931
                             el_weight.append(weights)
                             el_mass.append((el1+el2).M())
 
