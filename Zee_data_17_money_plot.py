@@ -18,7 +18,7 @@ def l_wall_time(seconds):
     m, s = divmod(seconds, 60)
     return "{0:.0f}min:{1:.0f}s".format(m,s)
 
-names=pn.read_csv(kur+"all_files_2017_UL_Nv9.txt", sep='\t',names=["nos"]) 
+names=pn.read_csv("all_files_2017_UL_Nv9.txt", sep='\t',names=["nos"]) 
 print("I have the libraries and names")
 
 notik=int(sys.argv[1])
