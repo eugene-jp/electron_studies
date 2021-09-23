@@ -41,7 +41,7 @@ bi=(lidz-no)*4
 print("{0}\tJust finished importing the files, had {1}".format(l_wall_time(time.time()-start),num))
 
 ### fit for data
-y_d, edges_d = np.histogram(df_d["mass"],weights=np.ones(len(df_d))*1, bins=bi, range=(no, lidz+0.1))
+y_d, edges_d = np.histogram(df_d["mass"],weights=np.ones(len(df_d))*1, bins=bi, range=(no, lidz))
 x_d = (edges_d[1:] + edges_d[:-1])/2
 yerr_d=np.sqrt(y_d)
 print("{0}\tHist-ed the data".format(l_wall_time(time.time()-start)))
