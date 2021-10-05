@@ -41,7 +41,7 @@ for aiziet in range(notik,tik):
     if divmod(len(tree),cik)[1]>0:
         dala=dala+1
     
-    for jauns in range(paliku,paliksu):
+    for jauns in range(0,dala):
         print("\n {0}\tStarting {1}/{2}".format(l_wall_time(time.time()-start),jauns+1,dala))
         start=time.time()
         nno=jauns*cik
