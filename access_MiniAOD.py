@@ -53,6 +53,7 @@ for aiziet in range(notik,tik): # Looping over files
     el_pt = []
     el_eta = []
     el_phi = []
+    el_isPF = []
     el_iev = []
     el_i = []       
     
@@ -60,18 +61,34 @@ for aiziet in range(notik,tik): # Looping over files
     for iev,event in enumerate(events): # Reading in events from the file
         event.getByLabel(electronLabel, electrons)
         #event.getByLabel(genParticlesLabel, genParticles)
-        print("iev = {0}".format(iev))
+        #print("iev = {0}".format(iev))
 
 
     
         for i,elec in enumerate(electrons.product()): # Checking all electrons in single event
             #print(i)
+            
             el_charge.append(elec.charge())
             el_pt.append(elec.pt())
             el_eta.append(elec.eta())
             el_phi.append(elec.phi()) 
+            el_isPF.append(elec.isPF())
             el_iev.append(iev)
             el_i.append(i) 
+            
+    multi_index = list(zip(el_iev,el_i))     # creates lists for entries from iev and subentries from i   
+    
+    index = pn.MultiIndex.from_tuples(multi_index,names=["entry","subentry"]) # creates entry and subentry structure in pandas
+    
+    data = list(zip(el_charge,el_pt,el_phi,el_eta,el_isPF)) # list data zipped together in one tuple/list
+    
+    df = pn.DataFrame(data,index=index,columns=["Electron_charge","Electron_pt","Electron_phi","Electron_eta","Electron_isPF"]) # Pandas data frame with entry/subentry structure
+    
+    
+    
+    
+#    zipped = list(zip(el_iev,el_i,el_charge,el_pt,el_phi,el_eta,el_isPF))
+#    df = pn.DataFrame(zipped,columns=["event","electron_i","Electron_charge","Electron_pt","Electron_phi","Electron_eta","Electron_isPF"])        
             
             
             
